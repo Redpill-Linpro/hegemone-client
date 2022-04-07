@@ -1,49 +1,37 @@
-# hegemone-client
-Repository for the client application that collects and dispatches plant data to the hegemone server.
+# Requirements
+* Raspberry Pi Imager
+* MicroSD Card + Reader on host PC
+* Formatted empty SD card
 
-Application that displays data in the browser.
+# Installation
+1. Install Raspberry Pi Imager
+2. Run it and select 
+   * Operating System: latest Raspberry Pi OS Lite OS (64-bit)
+   * Storage : Internal SD card 
+   
+3. Select the settings gear and 
+   * Configure Wi-Fi for your local network (2.4 Ghz!!)
+   * enable SSH
+   * set hostname
+   * create an user and password
+   * set locales
 
-Requires podman and hegemone-server
+# First boot
 
-1. Build image
+Chuck the sdcard into the rpi, connect it to power, and pray it starts up!
 
-    ```
-    podman build -f Dockerfile -t node/hegemone-client .
-    ```
+Check your local router administrator page to find out the IP address
+or try to ssh directly using `ssh <yourUser>@<hostname>.local`
 
-2. Create a pod
+Once in, open a root session (`sudo su`) and execute
 
-    ```
-    podman pod create -n hegemone -p 8080:8080 -p 5432:5432 -p 3000:3000
-    ```
+```Bash
+apt upgrade
+apt install openjdk-17-jdk-headless i2c-tools -y
+raspi-config
+```
 
-3. Start postgres container
+Go to Peripherals / Interfaces and select I2C and One-Wire protocols.
+Enable, save, finish, reboot, reconnect.
 
-    ```
-    podman run -d --oom-score-adj=200 --pod hegemone --name hegemone-postgres -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=planty -e POSTGRES_DB=hegemone postgres:14.2
-    ```
-
-4. Start hegemone-server container
-
-    ```
-    podman run -d -i --rm --pod hegemone quarkus/hegemone-server
-    ```
-
-5. Start hegemone-server container
-
-    ```
-    podman run -d -i --rm --pod hegemone node/hegemone-client
-    ```
-
-6. Check health
-
-    ```
-    curl localhost:8080/device-measurements/health
-    ```
-
-7. Check graphs
-
-Open a browser and go to 
-    ```
-    http://localhost:3000/
-    ```
+Congratulations, you're now ready to start hacking.
