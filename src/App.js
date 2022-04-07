@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Graph from './Graph.js';
+import GraphList from './GraphList.js';
 
 class App extends Component {
   render() {
@@ -12,7 +12,7 @@ class App extends Component {
           <h2>Welcome to React</h2>
         </div>
         <div className="App-intro">
-          <Graph></Graph>
+          <GraphList></GraphList>
         </div>
       </div>
     );

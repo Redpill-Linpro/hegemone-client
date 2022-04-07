@@ -18,6 +18,19 @@
   font-size: large;
 }
 
+.chart-container {
+  min-width: 450px;
+  min-height: 250px;
+  width:50%;
+  max-width: 900px;
+  max-height: 500px;
+  display: inline-block;
+}
+
+.device-container {
+  border: 2px solid black;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
