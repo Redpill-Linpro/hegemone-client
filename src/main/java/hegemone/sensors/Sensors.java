@@ -85,12 +85,22 @@ class Sensors {
 
 	public String sensorsToJSON() {
 		var spectralData = spectralSensor.spectralData();
+		var blue = spectralSensor.getRLQI(spectralData).getOrDefault("blue", 0);
+		var red = spectralSensor.getRLQI(spectralData).getOrDefault("red", 0);
+		var green = spectralSensor.getRLQI(spectralData).getOrDefault("green", 0);
+
 		var resultMap = Map.of(
-				"moisture", getSoilMoisture(),
+				"device_id", "PlantyPlantMonitor",
+				"moisture_level", getSoilMoisture(),
 				"soil_temp", getSoilTemperature(),
 				"ambient_temp", getTemperature(),
-				"spectral_data", spectralData,
-				"lux", getWhite(),
+				"spectral_data", spectralData.values(),
+				"light_measurement", Map.of(
+						"red", red,
+						"blue", blue,
+						"green", green,
+						"white", getWhite(),
+							"far_red", red/2),
 				"rlqi", spectralSensor.getRLQI(spectralData)
 		);
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();

@@ -18,7 +18,7 @@ class Soil {
 	private static I2CBuffer twoBuf;
 	private static I2CBuffer fourBuf;
 	private static I2CBus i2cBus;
-	private static final long I2C_WAIT = 400l;
+	private static final long I2C_WAIT = 800l;
 	private static final int MAX_RETRY = 4;
 	private static final byte MOISTURE_ADDR = 0x0F;
 	private static final byte MOISTURE_VAL = 0x10;
