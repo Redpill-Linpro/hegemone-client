@@ -16,6 +16,8 @@ class Main {
         selftest();
         if(args.length>0)
             DataSubmitter.register(new HTTPConsumer(args[0]));
+        if(args.length>3)
+            DataSubmitter.register(new QuestDBConsumer(args[1], Integer.parseInt(args[2])));
 	    DataSubmitter.register(new DataLogger());
         var sensors = new Sensors();
         while (true) {
