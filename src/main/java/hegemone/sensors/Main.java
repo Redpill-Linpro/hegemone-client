@@ -16,11 +16,11 @@ class Main {
         selftest();
         if(args.length>0)
             DataSubmitter.register(new HTTPConsumer(args[0]));
-        DataSubmitter.register(new DataLogger());
+	    DataSubmitter.register(new DataLogger());
         var sensors = new Sensors();
         while (true) {
             DataSubmitter.submit(sensors.sensorsToJSON());
-            Utils.suspend(400);
+            Utils.suspend(5000);
         }
     }
 

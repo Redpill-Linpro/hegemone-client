@@ -171,7 +171,9 @@ public class Spectrometer {
     }
 
     public Map<String, Integer> getRLQI(Map<String, Integer> spectralData) {
-
+	    var result = Map.of("blue",0,
+				"red",0,
+				"green",0);
         var blue = spectralData.entrySet()
                 .stream()
                 .filter(k -> k.getKey().contains("blue"))
@@ -185,7 +187,12 @@ public class Spectrometer {
                 .filter(k -> k.getKey().contains("red"))
                 .mapToInt(o -> o.getValue()).sum();
         var total = blue+green+red;
-        return Map.of("blue", blue*100/total, "green", green*100/total, "red", red*100/total);
+	try {
+	result = Map.of("blue", blue*100/total, "green", green*100/total, "red", red*100/total);
+	} catch (java.lang.ArithmeticException e) {
+		//
+	}
+        return result;
     }
     public LinkedHashMap<String, Integer> spectralData() {
         int[] channelValues = getPhotonFlux();

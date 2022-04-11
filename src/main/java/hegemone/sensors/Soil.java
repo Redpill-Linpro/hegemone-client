@@ -40,16 +40,12 @@ class Soil {
 
 	public double getTemperature() {
 		double ret = 0;
-		try {
-			i2cBus.selectSlave(DeviceTree.ADAFRUIT_SOIL_SENSOR);
-		} catch (IOException ioe) {
-			System.err.println("Couldn't select soil sensor on I2C bus");
-			return 0;
-		}
+
 		twoBuf.clear();
 		twoBuf.set(0,TEMP_ADDR)
 			.set(1,TEMP_VAL);
 		try{ synchronized(i2cBus) {
+				i2cBus.selectSlave(DeviceTree.ADAFRUIT_SOIL_SENSOR);
 				i2cBus.write(twoBuf);
 				Utils.suspend(I2C_WAIT*2);
 			} twoBuf.clear();
@@ -74,19 +70,12 @@ class Soil {
 	public int getMoisture() {
 		int ret = 0;
 		int tries = 0;
-		try {
-			i2cBus.selectSlave(DeviceTree.ADAFRUIT_SOIL_SENSOR);
-		} catch (IOException ioe) {
-			System.err.println("Couldn't select soil sensor on I2C bus");
-			return 0;
-		}
 		twoBuf.clear();
 		twoBuf.set(0,MOISTURE_ADDR)
 		      .set(1,MOISTURE_VAL);
-		
-
 		try {
 			synchronized(i2cBus) {
+				i2cBus.selectSlave(DeviceTree.ADAFRUIT_SOIL_SENSOR);
 				i2cBus.write(twoBuf);
 				Utils.suspend(I2C_WAIT*2);
 			}
